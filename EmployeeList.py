@@ -29,8 +29,7 @@ def register(employeeid):
                 except:
                     print"不正な値です。"
                     continue
-                if 1:
-                    break
+                break
             else:
                 print "不正な値です。再度入力してください。"
         else:
@@ -39,8 +38,7 @@ def register(employeeid):
             except:
                 print "不正な値です。"
                 continue
-            if 1:
-                break
+            break
 
     while(1):
 
