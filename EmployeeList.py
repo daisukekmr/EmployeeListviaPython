@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from datetime import date
+
 #社員情報クラス
 class employee:
 
@@ -9,34 +11,35 @@ class employee:
         self.bd = bd
         self.salary = salary
 
-#生年月日クラス
-class p_bd:
+#生年月日代入
+def bdinput(year,month,day):
+    bd = date(year,month,day)
+    return(bd)
 
-    def __init__(self,year,month,date):
-        self.year = year
-        self.month = month
-        self.date = date
 
 #社員登録
 def register(employeeid):
 
     print "名前を入力してください"
     tempname = raw_input()
-    print "生年月日を入力してください(yyyy/mm/ddの形で)"
     while(1):
+        print "生年月日を入力してください(yyyy/mm/ddまたやyyyymmddの形で)"
         tempbd = raw_input()
         bdlist = tempbd.split("/")
+        bd = []
         if len(bdlist) != 3:
-            print "不正な値です．再度入力してください"
-        elif int(bdlist[0]) > 2015:
-            print "不正な値です．再度入力してください"
-        elif int(bdlist[1]) > 12 or int(bdlist[1]) < 1:
-            print "不正な値です．再度入力してください"
-        elif int(bdlist[2]) > 31 or int(bdlist[2]) < 1:
-            print "不正な値です．再度入力してください"
+            if tempbd.isdigit() and len(tempbd) == 8:
+                bd = bdinput(int(tempbd[:-4]),int(tempbd[-4:-2]),int(tempbd[-2:]))
+                break
+            else:
+                print "不正な値です。再度入力してください。"
         else:
-            break
-    bdclass = p_bd(bdlist[0],bdlist[1],bdlist[2])
+            try:
+                bd = bdinput(int(bdlist[0]),int(bdlist[1]),int(bdlist[2]))
+            except:
+                print "不正な値です。"
+            finally:
+                break
 
     while(1):
 
@@ -52,7 +55,7 @@ def register(employeeid):
         else:
             print "不正な値です。"
 
-    EmployeeList.append(employee(employeeid,tempname,bdclass,tempintsalary))
+    EmployeeList.append(employee(employeeid,tempname,bd,tempintsalary))
 
     employeeidtemp = employeeid + 1
 
@@ -65,7 +68,7 @@ def intro():
     print "ID   名前       生年月日     給与"
     print "*****************************"
     for i in EmployeeList:
-        string = str(i.id) + "   " + i.name + "    " + i.bd.year + "年" + i.bd.month +"月" + i.bd.date + "日" + "      " + '{:,d}'.format(i.salary) + "円"
+        string = str(i.id) + "   " + i.name + "    " + str(i.bd.year) + "年" + str(i.bd.month) +"月" + str(i.bd.day) + "日" + "      " + '{:,d}'.format(i.salary) + "円"
         print string
     print "*****************************"
 
