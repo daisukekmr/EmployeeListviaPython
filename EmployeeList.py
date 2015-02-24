@@ -11,11 +11,6 @@ class employee:
         self.bd = bd
         self.salary = salary
 
-#生年月日代入
-def bdinput(year,month,day):
-    bd = date(year,month,day)
-    return(bd)
-
 
 #社員登録
 def register(employeeid):
@@ -23,22 +18,28 @@ def register(employeeid):
     print "名前を入力してください"
     tempname = raw_input()
     while(1):
-        print "生年月日を入力してください(yyyy/mm/ddまたやyyyymmddの形で)"
+        print "生年月日を入力してください(yyyy/mm/ddまたはyyyymmddの形で)"
         tempbd = raw_input()
         bdlist = tempbd.split("/")
         bd = []
         if len(bdlist) != 3:
             if tempbd.isdigit() and len(tempbd) == 8:
-                bd = bdinput(int(tempbd[:-4]),int(tempbd[-4:-2]),int(tempbd[-2:]))
-                break
+                try:
+                    bd = date(int(tempbd[:-4]),int(tempbd[-4:-2]),int(tempbd[-2:]))
+                except:
+                    print"不正な値です。"
+                    continue
+                if 1:
+                    break
             else:
                 print "不正な値です。再度入力してください。"
         else:
             try:
-                bd = bdinput(int(bdlist[0]),int(bdlist[1]),int(bdlist[2]))
+                bd = date(int(bdlist[0]),int(bdlist[1]),int(bdlist[2]))
             except:
                 print "不正な値です。"
-            finally:
+                continue
+            if 1:
                 break
 
     while(1):
