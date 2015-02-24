@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import re
-
+#社員情報クラス
 class employee:
 
     def __init__(self,id,name,bd,salary):
@@ -10,7 +9,7 @@ class employee:
         self.bd = bd
         self.salary = salary
 
-
+#生年月日クラス
 class p_bd:
 
     def __init__(self,year,month,date):
@@ -18,7 +17,7 @@ class p_bd:
         self.month = month
         self.date = date
 
-
+#社員登録
 def register(employeeid):
 
     print "名前を入力してください"
@@ -39,17 +38,19 @@ def register(employeeid):
             break
     bdclass = p_bd(bdlist[0],bdlist[1],bdlist[2])
 
-    print "月額の給与を入力してください(8桁まで)"
     while(1):
-        tempsalary = raw_input()
-        if tempsalary.isdigit():
-            tempintsalary = int(tempsalary)
-            if tempintsalary <= 99999999:
-                break
-            else:
-                print "桁数が多すぎます．再度入力してください"
+
+        print "月額の給与を入力してください(8桁まで)"
+        tempstrsalary = raw_input()
+        try:
+            tempintsalary = int(tempstrsalary)
+        except:
+            print "不正な値です。"
+            continue
+        if tempintsalary > 0 and tempintsalary < 100000000:
+            break
         else:
-            print "数値ではありません．再度入力してください"
+            print "不正な値です。"
 
     EmployeeList.append(employee(employeeid,tempname,bdclass,tempintsalary))
 
@@ -57,7 +58,7 @@ def register(employeeid):
 
     return(employeeidtemp)
 
-
+#社員情報照会
 def intro():
 
     print "*****************************"
@@ -69,7 +70,7 @@ def intro():
     print "*****************************"
 
 
-
+#削除
 def delete(requiredid):
 
     j = 0
@@ -87,13 +88,16 @@ def delete(requiredid):
                 print "%sを削除しました" % deletedList.name
             break
         j = j + 1
+    print "該当するIDの社員情報がありませんでした"
 
-
+#編集
 def edit():
 
     print "更新したい社員のIDを入力してください"
     editid = input()
 
+
+#削除関数と登録関数により編集を実施
     delete(editid)
     register(editid)
 
@@ -102,8 +106,8 @@ def edit():
 
 if __name__ == "__main__":
 
-    employeeid = 1
-    EmployeeList = []
+    employeeid = 1  #社員IDを連番にするための変数の初期値
+    EmployeeList = []   #社員リスト
 
     while(1):
         print "<MENU>\n"
@@ -114,7 +118,7 @@ if __name__ == "__main__":
         print "4. 更新"
         print "========================"
 
-        select = raw_input()
+        select = raw_input("実行する処理を半角数字で入力")
 
         if select == "1":
             employeeid = register(employeeid)
